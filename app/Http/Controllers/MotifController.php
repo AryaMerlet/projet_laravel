@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MotifRequest;
 use App\Models\Absence;
 use App\Models\Motif;
 use Illuminate\Http\Request;
@@ -35,9 +36,12 @@ class MotifController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
-        // new motif($request->description);
-
+        // Motif::create([
+        //     'description' => $request->description
+        // ]);
+        $motif = new Motif;
+        $motif->description = $request->input('description');
+        $motif->save();
         return $this->index();
     }
 
@@ -66,7 +70,7 @@ class MotifController extends Controller
      * @param \App\Models\Motif $motif
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function update(Request $request, Motif $motif)
+    public function update(MotifRequest $request, Motif $motif)
     {
         $motif->description = $request->description;
         $motif->save();

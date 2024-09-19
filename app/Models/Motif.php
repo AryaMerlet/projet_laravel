@@ -53,4 +53,6 @@ class Motif extends Model
             'is_accessible_worker' => 'boolean',
         ];
     }
+
+    // protected $fillable = ['description'];
 }

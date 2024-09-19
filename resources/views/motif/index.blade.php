@@ -2,9 +2,9 @@
 
 @section('content')
 
-@if(session::has('message'))
+{{-- @if(session::has('message'))
     <p class="badge bg-warning">{{session('message')}}</p>
-@endif
+@endif --}}
 
 @foreach ($motifs as $motif)
     <table>
