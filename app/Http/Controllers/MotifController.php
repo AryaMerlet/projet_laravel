@@ -5,22 +5,23 @@ namespace App\Http\Controllers;
 use App\Models\Absence;
 use App\Models\Motif;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\session;
+use Illuminate\Support\Facades\Session;
 
 class MotifController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Summary of index
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
         $motifs = Motif::all();
-
         return view('motif.index', compact('motifs'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Summary of create
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function create()
     {
@@ -28,25 +29,31 @@ class MotifController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Summary of store
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function store(Request $request)
     {
-        dd($request);
-        new motif($request->description);
+        // dd($request);
+        // new motif($request->description);
 
         return $this->index();
     }
 
     /**
-     * Display the specified resource.
+     * Summary of show
+     * @param \App\Models\Motif $motif
+     * @return void
      */
     public function show(Motif $motif)
     {
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Summary of edit
+     * @param \App\Models\Motif $motif
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit(Motif $motif)
     {
@@ -54,7 +61,10 @@ class MotifController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Summary of update
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Motif $motif
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function update(Request $request, Motif $motif)
     {
@@ -65,7 +75,9 @@ class MotifController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Summary of destroy
+     * @param \App\Models\Motif $motif
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function destroy(Motif $motif)
     {

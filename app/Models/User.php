@@ -6,9 +6,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Database\Factories\UserFactory;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $name
@@ -36,6 +37,9 @@ use Illuminate\Notifications\Notifiable;
  */
 class User extends Authenticatable
 {
+    /**
+     * @use HasFactory<UserFactory>
+    */
     use HasFactory, Notifiable;
 
     /**

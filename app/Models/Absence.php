@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Database\Factories\AbsenceFactory;
 
 /**
  *
@@ -34,15 +35,11 @@ class Absence extends Model
 
     /**
      * Summary of absence
-     * @return BelongsTo<Motif,<Absence>
+     * @return BelongsTo<Motif,Absence>
      */
     public function motif()
     {
         return $this->belongsTo(Motif::class);
     }
 
-    public function allAbsence($clause)
-    {
-        return Absence::where('id_user', $clause)->get();
-    }
 }

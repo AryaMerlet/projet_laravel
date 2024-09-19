@@ -8,57 +8,76 @@ use Illuminate\Http\Request;
 class AbsenceController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Summary of index
+     * @return void
      */
     public function index()
     {
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Summary of create
+     * @return void
      */
     public function create()
     {
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Summary of store
+     * @param \Illuminate\Http\Request $request
+     * @return void
      */
     public function store(Request $request)
     {
     }
 
     /**
-     * Display the specified resource.
+     * Summary of show
+     * @param \App\Models\Absence $absence
+     * @return void
      */
     public function show(Absence $absence)
     {
-        $num = $absence->getAbsence();
-        $liste = $absence->allAbsence($absence);
-        dd($liste);
+        // $num = $absence->getAbsence();
+        // $liste = $absence->allAbsence($absence);
+        // dd($liste);
+        //
     }
-
+    /**
+     * Summary of getAbsence
+     * @param \Illuminate\Http\Request $request
+     * @param mixed $absence
+     * @return mixed
+     */
     public function getAbsence(Request $request, $absence)
     {
         return $absence;
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Summary of edit
+     * @param \App\Models\Absence $absence
+     * @return void
      */
     public function edit(Absence $absence)
     {
     }
 
     /**
-     * Update the specified resource in storage.
+     * Summary of update
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Absence $absence
+     * @return void
      */
     public function update(Request $request, Absence $absence)
     {
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Summary of destroy
+     * @param \App\Models\Absence $absence
+     * @return void
      */
     public function destroy(Absence $absence)
     {

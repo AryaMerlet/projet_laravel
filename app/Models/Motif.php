@@ -5,9 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Database\Factories\MotifFactory;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $description
@@ -38,9 +39,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Motif extends Model
 {
+    /** @use HasFactory<MotifFactory> */
     use HasFactory;
     use SoftDeletes;
 
+    /**
+     * Summary of casts
+     * @return array<mixed>
+     */
     protected function casts(): array
     {
         return [
