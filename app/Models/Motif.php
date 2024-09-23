@@ -54,5 +54,6 @@ class Motif extends Model
         ];
     }
 
+    //For mass integration
     // protected $fillable = ['description'];
 }
