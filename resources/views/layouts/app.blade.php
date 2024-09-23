@@ -18,17 +18,6 @@
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            @auth
-                @if (Auth::check())
-
-                @else
-                    {{-- {{ route('login') }} --}}
-                @endif
-            @endauth
-
-            {{-- @guest
-                @yield('content')
-            @endguest --}}
             @include('layouts.navigation')
 
             <!-- Page Heading -->
@@ -42,6 +31,17 @@
 
             <!-- Page Content -->
             <main>
+                @auth
+                    @if (Auth::check())
+                        <a href="{{ route('motif.index') }}">voir les motifs</a>
+                        @if(url('/motif'))
+                            @yield('contentMotif')
+                        @endif
+                        {{-- <a href="{{route('absence.index')}}">voir les absences</a> --}}
+                    @else
+                        {{ route('guest') }}
+                    @endif
+                @endauth
                 {{-- {{ $slot }} --}}
             </main>
         </div>

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Silber\Bouncer\Database\HasRolesAndAbilities;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -37,6 +38,7 @@ use Database\Factories\UserFactory;
  */
 class User extends Authenticatable
 {
+    use HasRolesAndAbilities;
     /**
      * @use HasFactory<UserFactory>
     */
@@ -75,4 +77,22 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function getinitialesAttribute(){
+        return ucfirst($this->firstname)[0].ucfirst($this->lastname)[0];
+    }
+
+    public function run(){
+        Bouncer::allow('admin')->to('user-retrieve');
+        Bouncer::allow('admin')->to('user-create');
+        Bouncer::allow('admin')->to('user-update');
+        Bouncer::allow('admin')->to('user-delete');
+
+        Bouncer::allow('salarie')->to('retrieve');
+        Bouncer::allow('salarie')->to('update');
+
+        Bouncer::assign('admin')->to($user);
+    }
+
+
 }

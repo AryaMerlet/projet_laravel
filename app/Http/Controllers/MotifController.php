@@ -2,14 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Http\Requests\MotifRequest;
 use App\Models\Absence;
 use App\Models\Motif;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Session;
 
-class MotifController extends Controller
+class MotifController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return [new Middleware('CheckAdmin', except:['index','show'])];
+    }
     /**
      * Summary of index
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
@@ -26,7 +33,12 @@ class MotifController extends Controller
      */
     public function create()
     {
-        return view('motif.create');
+        if(Auth::user()->can('motif-create') || Auth::user()->isA('admin')){
+            return view('motif.create');
+        } else{
+            session::put('message','vous n\'êtes pas autorisé a voir cette page');
+            return redirect(route('dashboard'));
+        }
     }
 
     /**

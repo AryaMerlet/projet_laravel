@@ -1,10 +1,12 @@
 @extends('layouts.app')
 
-@section('content')
+{{-- @section('contentMotif') --}}
 
 {{-- @if(session::has('message'))
     <p class="badge bg-warning">{{session('message')}}</p>
 @endif --}}
+
+
 
 @foreach ($motifs as $motif)
     <table>
@@ -30,4 +32,4 @@
     <a href="{{route('motif.create')}}">Create new motif</a>
 </div>
 
-@endsection
+{{-- @endsection --}}

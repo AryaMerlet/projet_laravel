@@ -2,19 +2,23 @@
 
 namespace App\Http\Middleware;
 
+use Illuminate\Support\Facades\Auth;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class CheckAuthUser
+class AdminMiddleware
 {
     /**
      * Handle an incoming request.
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function CheckAdmin(Request $request, Closure $next): Response
     {
-        return $next($request);
+        if(Auth::check() && Auth::user()->is_admin === true){
+            return $next($request);
+        }
+        return redirect()->route('motif.index');
     }
 }
