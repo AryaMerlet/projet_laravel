@@ -3,20 +3,23 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use Session;
 use App\Http\Requests\MotifRequest;
 use App\Models\Absence;
 use App\Models\Motif;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
-use Illuminate\Support\Facades\Session;
+use App\Http\Middleware\AdminMiddleware;
+use App\Mail\infomail;
+use Mail;
 
-class MotifController extends Controller implements HasMiddleware
+class MotifController extends Controller
 {
-    public static function middleware()
-    {
-        return [new Middleware('CheckAdmin', except:['index','show'])];
-    }
+    // public static function middleware()
+    // {
+    //     return [new Middleware('CheckAdmin', except:['index','show'])];
+    // }
     /**
      * Summary of index
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
@@ -54,6 +57,7 @@ class MotifController extends Controller implements HasMiddleware
         $motif = new Motif;
         $motif->description = $request->input('description');
         $motif->save();
+        Mail::to(Auth::user()->email)->send(new infomail($motif));
         return $this->index();
     }
 
@@ -97,7 +101,7 @@ class MotifController extends Controller implements HasMiddleware
      */
     public function destroy(Motif $motif)
     {
-        $nb = Absence::where('motif_id', $motif->id)->count();
+        $nb = Absence::where('id_motif', $motif->id)->count();
         if ($nb === 0) {
             $motif->delete();
         } else {

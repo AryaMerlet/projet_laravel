@@ -18,10 +18,6 @@ class MotifFactory extends Factory
     {
         return [
             'description' => fake()->text(30),
-            'firstname' => fake()->firstName(),
-            'lastname' => fake()->LastName(),
-            'job' => fake()->jobTitle(),
-            'is_accessible_worker' => fake()->boolean(),
         ];
     }
 }

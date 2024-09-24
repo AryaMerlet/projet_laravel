@@ -32,15 +32,7 @@
             <!-- Page Content -->
             <main>
                 @auth
-                    @if (Auth::check())
-                        <a href="{{ route('motif.index') }}">voir les motifs</a>
-                        @if(url('/motif'))
-                            @yield('contentMotif')
-                        @endif
-                        {{-- <a href="{{route('absence.index')}}">voir les absences</a> --}}
-                    @else
-                        {{ route('guest') }}
-                    @endif
+                   @yield('content')
                 @endauth
                 {{-- {{ $slot }} --}}
             </main>

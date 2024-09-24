@@ -78,21 +78,8 @@ class User extends Authenticatable
         ];
     }
 
-    public function getinitialesAttribute(){
+    public function getInitialesAttribute(){
         return ucfirst($this->firstname)[0].ucfirst($this->lastname)[0];
     }
-
-    public function run(){
-        Bouncer::allow('admin')->to('user-retrieve');
-        Bouncer::allow('admin')->to('user-create');
-        Bouncer::allow('admin')->to('user-update');
-        Bouncer::allow('admin')->to('user-delete');
-
-        Bouncer::allow('salarie')->to('retrieve');
-        Bouncer::allow('salarie')->to('update');
-
-        Bouncer::assign('admin')->to($user);
-    }
-
 
 }

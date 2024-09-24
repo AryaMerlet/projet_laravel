@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Database\Factories\AbsenceFactory;
 
 /**
@@ -33,13 +33,17 @@ class Absence extends Model
     /** @use HasFactory<AbsenceFactory> */
     use HasFactory;
 
-    /**
-     * Summary of absence
-     * @return BelongsTo<Motif,Absence>
-     */
-    public function motif()
+/**
+ *
+ */
+    public function Motifs()
     {
-        return $this->belongsTo(Motif::class);
+        return $this->HasOne(Motif::class);
+    }
+
+    public function Users()
+    {
+        return $this->HasOne(User::class);
     }
 
 }
