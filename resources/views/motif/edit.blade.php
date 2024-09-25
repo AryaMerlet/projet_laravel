@@ -1,13 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-<form action="{{route('motif.update',['motif'=>$motif->id])}}" method="POST">
+{{-- <form action="{{route('motif.update',['motif'=>$motif->id])}}" method="POST">
     @csrf
-    @method('put')
-        <input type="text" value="{{old('description', $motif->description)}}" name="description">
-    @error('description')
-        <div style="color:red">{{$message}}</div>
-    @enderror
-    <input type="submit" value="modifier">
-</form>
+    @method('put') --}}
+    <x-inputs.forms route="{{route('motif.update',['motif'=>$motif->id])}}" method="put">
+        <x-inputs.texts property="description" label="{{__('label')}}" default="{{$motif->description}}"/>
+        <input type="submit" value="modifier">
+    </x-inputs.formsform>
 @endsection

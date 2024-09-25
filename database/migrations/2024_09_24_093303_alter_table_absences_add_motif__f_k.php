@@ -1,9 +1,9 @@
 <?php
 
+use App\Models\Motif;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\Motif;
 
 return new class extends Migration
 {
@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('absences', function (Blueprint $table){
+        Schema::table('absences', function (Blueprint $table) {
             $table->foreignIdFor(Motif::class, 'id_motif');
         });
     }
@@ -22,7 +22,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('absences', function (Blueprint $table){
+        Schema::table('absences', function (Blueprint $table) {
             $table->dropColumn(Motif::class, 'id_motif');
         });
     }

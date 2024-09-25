@@ -9,6 +9,7 @@ class AbsenceController extends Controller
 {
     /**
      * Summary of index
+     *
      * @return void
      */
     public function index()
@@ -17,6 +18,7 @@ class AbsenceController extends Controller
 
     /**
      * Summary of create
+     *
      * @return void
      */
     public function create()
@@ -25,7 +27,7 @@ class AbsenceController extends Controller
 
     /**
      * Summary of store
-     * @param \Illuminate\Http\Request $request
+     *
      * @return void
      */
     public function store(Request $request)
@@ -34,7 +36,7 @@ class AbsenceController extends Controller
 
     /**
      * Summary of show
-     * @param \App\Models\Absence $absence
+     *
      * @return void
      */
     public function show(Absence $absence)
@@ -44,10 +46,12 @@ class AbsenceController extends Controller
         // dd($liste);
         //
     }
+
     /**
      * Summary of getAbsence
-     * @param \Illuminate\Http\Request $request
-     * @param mixed $absence
+     *
+     * @param  mixed  $absence
+     *
      * @return mixed
      */
     public function getAbsence(Request $request, $absence)
@@ -57,7 +61,7 @@ class AbsenceController extends Controller
 
     /**
      * Summary of edit
-     * @param \App\Models\Absence $absence
+     *
      * @return void
      */
     public function edit(Absence $absence)
@@ -66,8 +70,7 @@ class AbsenceController extends Controller
 
     /**
      * Summary of update
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Absence $absence
+     *
      * @return void
      */
     public function update(Request $request, Absence $absence)
@@ -76,7 +79,7 @@ class AbsenceController extends Controller
 
     /**
      * Summary of destroy
-     * @param \App\Models\Absence $absence
+     *
      * @return void
      */
     public function destroy(Absence $absence)

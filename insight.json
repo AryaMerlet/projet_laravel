@@ -1,0 +1,25 @@
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "/usr/bin/php8.3 '/home/vagrant/code/projet_laravel/vendor/bin/parallel-lint' --no-colors --no-progress --json --exclude 'bower_components' --exclude 'node_modules' --exclude 'vendor' --exclude 'vendor-bin' --exclude '.phpstorm.meta.php' --exclude 'config' --exclude 'storage' --exclude 'resources' --exclude 'bootstrap' --exclude 'nova' --exclude 'database' --exclude 'server.php' --exclude '_ide_helper.php' --exclude '_ide_helper_models.php' --exclude 'app/Providers/TelescopeServiceProvider.php' --exclude 'public' --exclude 'vendor' --exclude 'tests' --exclude 'Tests' --exclude 'test' --exclude 'Test' ." exceeded the timeout of 60 seconds.
+
+  at vendor/symfony/process/Process.php:1176
+    1172▕ 
+    1173▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1174▕             $this->stop(0);
+    1175▕ 
+  ➜ 1176▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1177▕         }
+    1178▕ 
+    1179▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1180▕             $this->stop(0);
+
+      [2m+7 vendor frames [22m
+
+  8   [internal]:0
+      NunoMaduro\PhpInsights\Domain\Insights\InsightCollectionFactory::NunoMaduro\PhpInsights\Domain\Insights\{closure}()
+      [2m+17 vendor frames [22m
+
+  26  artisan:13
+      Illuminate\Foundation\Application::handleCommand()
+

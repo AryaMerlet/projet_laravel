@@ -2,11 +2,11 @@
 
 namespace App\Http\Middleware;
 
+use App;
 use Closure;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
-use App;
 use Session;
+use Symfony\Component\HttpFoundation\Response;
 
 class LanguageMiddleware
 {
@@ -17,7 +17,7 @@ class LanguageMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $language = Session::get('language',App::getLocale());
+        $language = Session::get('language', App::getLocale());
 
         App::setLocale($language);
 

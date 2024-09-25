@@ -2,9 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use Illuminate\Support\Facades\Auth;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class AdminMiddleware
@@ -16,9 +16,10 @@ class AdminMiddleware
      */
     public function CheckAdmin(Request $request, Closure $next): Response
     {
-        if(Auth::check() && Auth::user()->is_admin === true){
+        if (Auth::check() && Auth::user()->is_admin === true) {
             return $next($request);
         }
+
         return redirect()->route('motif.index');
     }
 }
