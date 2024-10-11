@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Motif;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -14,9 +15,10 @@ return new class extends Migration
     {
         Schema::create('absences', function (Blueprint $table) {
             $table->id();
-            $table->string('startleave');
-            $table->string('duration');
-            $table->foreignIdFor(User::class, 'id_user');
+            $table->string('leaveStart');
+            $table->string('leaveEnd');
+            $table->foreignIdFor(User::class, 'user_id')->constrained('users');
+            $table->foreignIdFor(Motif::class, 'motif_id')->constrained('motifs');
             $table->timestamps();
         });
     }

@@ -22,7 +22,7 @@ class MotifRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'description' => 'required|string|max:30',
+            'description' => ['required|string|max:30'],
         ];
     }
 }

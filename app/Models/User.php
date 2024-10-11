@@ -16,13 +16,16 @@ use Silber\Bouncer\Database\HasRolesAndAbilities;
  * @property string $email
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property mixed $password
+ * @property int $is_admin
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  *
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Silber\Bouncer\Database\Ability> $abilities
  * @property-read int|null $abilities_count
- * @property-read mixed $initiales
+ * @property-read string $initiales
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Absence> $hasAbsence
+ * @property-read int|null $has_absence_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Silber\Bouncer\Database\Role> $roles
@@ -38,6 +41,7 @@ use Silber\Bouncer\Database\HasRolesAndAbilities;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereFirstname($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereIs($role)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereIsAdmin($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereIsAll($role)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereIsNot($role)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereLastname($value)
@@ -77,6 +81,21 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    /**
+     * Summary of hasAbsence
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<Absence>
+     */
+    public function hasAbsence()
+    {
+        return $this->hasMany(Absence::class);
+    }
+
+    /**
+     * Summary of getInitialesAttribute
+     *
+     * @return string
+     */
     public function getInitialesAttribute()
     {
         return ucfirst($this->firstname)[0].ucfirst($this->lastname)[0];

@@ -16,4 +16,12 @@ class ExampleTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    public function testBasicTest()
+    {
+        $user = \App\Models\User::find(1);
+        $this->actingAs($user);
+        $response = $this->get('/test');
+        $response->assertStatus(200)->assertViewIs('test.index');
+    }
 }

@@ -18,6 +18,9 @@
                     <x-nav-link :href="route('motif.index')" :active="request()->routeIs('motif.index')">
                         {{ __('Motifs') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('absence.index')" :active="request()->routeIs('absence.index')">
+                        {{ __('Absences') }}
+                    </x-nav-link>
                 </div>
             </div>
 

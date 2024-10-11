@@ -18,11 +18,13 @@ class AbsenceFactory extends Factory
      */
     public function definition(): array
     {
+        $leaveStart = fake()->dateTimeThisYear();
+
         return [
-            'startleave' => fake()->dateTimeThisYear(),
-            'duration' => fake()->time(),
-            'id_user' => User::all()->random()->id(),
-            'id_motif' => Motif::all()->random()->id(),
+            'leaveStart' => $leaveStart,
+            'leaveEnd' => fake()->dateTimeBetween($leaveStart, 'now'),
+            'user_id' => User::all()->random()->id,
+            'motif_id' => Motif::all()->random()->id,
         ];
     }
 }

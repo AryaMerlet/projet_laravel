@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Cache;
 use Database\Factories\MotifFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,6 +14,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Absence> $absences
+ * @property-read int|null $absences_count
  *
  * @method static \Database\Factories\MotifFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Motif newModelQuery()
@@ -35,6 +39,28 @@ class Motif extends Model
     use HasFactory;
 
     use SoftDeletes;
+
+    /**
+     * Summary of absences
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<Absence>
+     */
+    public function absences()
+    {
+        return $this->hasMany(Absence::class);
+    }
+
+    /**
+     * Summary of getMotifWithCache
+     *
+     * @return mixed
+     */
+    public function getMotifWithCache()
+    {
+        Cache::remember('motif', 3600, function () {
+            return Motif::all();
+        });
+    }
 
     /**
      * Summary of casts

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Absence;
+use App\Models\Motif;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AbsenceController extends Controller
@@ -10,19 +12,39 @@ class AbsenceController extends Controller
     /**
      * Summary of index
      *
-     * @return void
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
+        // $user = auth::user();
+        // if (Bouncer::is($user)->a('admin')){
+        $motifs = Motif::all();
+        // $absences = Absence::all();
+        $users = User::all();
+        $absences = Absence::with('motif');
+
+        return view('absence.index', compact('absences', 'motifs', 'absences'));
+        // } else if(Bouncer::is($user)->a('employee')) {
+        //     $absencesUser = New Absence;
+        //     $absencesUser->getAbsenceWithMotifAndUser($user->id);
+        //     $motifs = Motif::all();
+        //     $absences = Absence::all();
+
+        //     return view('absence.index', compact('absences','user','motifs','absencesUser'));
+        // } else {
+        //     session::hasMessage("You don't have the rights to access this page");
+        //     return redirect()->route('/');
+        // }
     }
 
     /**
      * Summary of create
      *
-     * @return void
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function create()
     {
+        return view('absence.create');
     }
 
     /**
@@ -32,6 +54,9 @@ class AbsenceController extends Controller
      */
     public function store(Request $request)
     {
+        $absence = new Absence();
+        $absence->leaveStart = $request->input('leavestart');
+        $absence->leaveEnd = $request->input('leaveend');
     }
 
     /**

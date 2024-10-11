@@ -33,6 +33,18 @@ class UserFactory extends Factory
         ];
     }
 
+    public function createadmin()
+    {
+        return $this->create([
+            'firstname' => 'Arya',
+            'lastname' => 'Merlet',
+            'email' => 'arya.merlet@gmail.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('Not24get'),
+            'remember_token' => Str::random(10),
+        ]);
+    }
+
     /**
      * Indicate that the model's email address should be unverified.
      */

@@ -6,17 +6,22 @@ use App\Http\Requests\MotifRequest;
 use App\Mail\infomail;
 use App\Models\Absence;
 use App\Models\Motif;
-use Auth;
-use Illuminate\Http\Request;
-use Mail;
-use Session;
+use App\Repositories\MotifRepository;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 
 class MotifController extends Controller
 {
-    // public static function middleware()
-    // {
-    //     return [new Middleware('CheckAdmin', except:['index','show'])];
-    // }
+    /**
+     * Summary of __construct
+     */
+    public function __construct(protected MotifRepository $motifRepository)
+    {
+        $this->motifRepository = $motifRepository;
+    }
+
     /**
      * Summary of index
      *
@@ -24,7 +29,11 @@ class MotifController extends Controller
      */
     public function index()
     {
-        $motifs = Motif::all();
+        // $motifs = new Motif();
+        // $motifs->getMotifWithCache();
+        $motifs = cache::remember('motif', 3600, function () {
+            return Motif::all();
+        });
 
         return view('motif.index', compact('motifs'));
     }
@@ -36,12 +45,14 @@ class MotifController extends Controller
      */
     public function create()
     {
-        if (Auth::user()->can('motif-create') || Auth::user()->isA('admin')) {
-            return view('motif.create');
-        }
-        session::put('message', 'vous n\'êtes pas autorisé a voir cette page');
+        return view('motif.create');
 
-        return redirect(route('dashboard'));
+        // if (Auth::user()->can('motif-create') || Auth::user()->isA('admin')) {
+        //     return view('motif.create');
+        // } else {
+        //     session::put('message', 'vous n\'êtes pas autorisé a voir cette page');
+        //     return redirect(route('dashboard'));
+        // }
     }
 
     /**
@@ -49,14 +60,14 @@ class MotifController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function store(Request $request)
+    public function store(MotifRequest $request)
     {
-        // Motif::create([
-        //     'description' => $request->description
-        // ]);
-        $motif = new Motif();
-        $motif->description = $request->input('description');
-        $motif->save();
+        $data = $request->all();
+        $motif = $this->motifRepository->store($data);
+        // $motif = new Motif();
+        // $motif->description = $request->input('description');
+        // $motif->save();
+        cache::forget('motif');
         Mail::to(Auth::user()->email)->send(new infomail($motif));
 
         return $this->index();
@@ -84,16 +95,17 @@ class MotifController extends Controller
     /**
      * Summary of update
      *
-     * @param  \Illuminate\Http\Request  $request
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return mixed|\Illuminate\Http\RedirectResponse
      */
     public function update(MotifRequest $request, Motif $motif)
     {
-        $motif->description = $request->description;
-        $motif->save();
+        $data = $request->all();
+        $motif = $this->motifRepository->update($motif, $data);
 
-        return $this->index();
+        // $motif->description = $request->description;
+        // $motif->save();
+        // cache::forget('motif');
+        return redirect()->route('motif.index');
     }
 
     /**
@@ -114,8 +126,8 @@ class MotifController extends Controller
     }
 
     /**
-     * @return mixed
-     *               Summary of restore
+     * Summary of restore
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function restore(Motif $motif)

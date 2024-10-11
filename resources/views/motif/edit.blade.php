@@ -7,5 +7,5 @@
     <x-inputs.forms route="{{route('motif.update',['motif'=>$motif->id])}}" method="put">
         <x-inputs.texts property="description" label="{{__('label')}}" default="{{$motif->description}}"/>
         <input type="submit" value="modifier">
-    </x-inputs.formsform>
+    </x-inputs.forms>
 @endsection

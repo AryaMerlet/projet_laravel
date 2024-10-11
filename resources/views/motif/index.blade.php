@@ -13,12 +13,16 @@
     </thead>
     <tbody>
 
-
 @foreach ($motifs as $motif)
         <tr>
             <td>
                 <div>
-                    <a href="{{route('motif.edit',['motif'=>$motif->id])}}">{{$motif->description}}</a>
+                    <p>{{$motif->description}}</p>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <a href="{{route('motif.edit',['motif'=>$motif->id])}}">modify</a>
                 </div>
             </td>
             <td>
