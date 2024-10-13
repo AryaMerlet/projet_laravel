@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Mail;
 
 class MailTest extends TestCase
 {
+    use RefreshDatabase;
     /**
      * @return void
      */
