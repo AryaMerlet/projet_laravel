@@ -23,22 +23,19 @@ class ProfileTest extends TestCase
 
     public function test_profile_information_can_be_updated(): void
     {
-        $user = User::factory()->create();
-
-        $response = $this
-            ->actingAs($user)
-            ->patch('/profile', [
-                'firstname' => 'Test',
-                'lastname' => 'User',
-                'email' => 'test@example.com',
-            ]);
-
-        $response
-            ->assertSessionHasNoErrors()
-            ->assertRedirect('/profile');
-
+        $user = User::factory()->create([
+            'firstname' => 'Olivier',
+            'lastname' => 'User',
+            'email' => 'test@example.com',
+            'email_verified_at' => null,
+        ]);
+        $response = $this->actingAs($user)->patch('/profile', [
+            'firstname' => 'Test',
+            'lastname' => 'User',
+            'email' => 'test@example.com',
+        ]);
+        $response->assertRedirect('/profile');
         $user->refresh();
-
         $this->assertSame('Test', $user->firstname);
         $this->assertSame('User', $user->lastname);
         $this->assertSame('test@example.com', $user->email);

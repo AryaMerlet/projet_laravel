@@ -64,9 +64,6 @@ class MotifController extends Controller
     {
         $data = $request->all();
         $motif = $this->motifRepository->store($data);
-        // $motif = new Motif();
-        // $motif->description = $request->input('description');
-        // $motif->save();
         cache::forget('motif');
         Mail::to(Auth::user()->email)->send(new infomail($motif));
 
@@ -101,10 +98,6 @@ class MotifController extends Controller
     {
         $data = $request->all();
         $motif = $this->motifRepository->update($motif, $data);
-
-        // $motif->description = $request->description;
-        // $motif->save();
-        // cache::forget('motif');
         return redirect()->route('motif.index');
     }
 
@@ -115,25 +108,26 @@ class MotifController extends Controller
      */
     public function destroy(Motif $motif)
     {
-        $nb = Absence::where('id_motif', $motif->id)->count();
+        $nb = Absence::where('motif_id', $motif->id)->count();
         if ($nb === 0) {
             $motif->delete();
+            return redirect()->route('motif.index');
         } else {
             session::put('message', "Le motif est encore utilisé par {$nb} absence(s)");
+            return redirect()->route('motif.index');
         }
-
-        return $this->index();
     }
 
-    /**
-     * Summary of restore
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
-    public function restore(Motif $motif)
-    {
-        $motif->restore();
+    // /**
+    //  * Summary of restore
+    //  * @param mixed $id
+    //  * @return \Illuminate\Http\RedirectResponse
+    //  */
+    // public function restore($id)
+    // {
+    //     $motif = Motif::withTrashed()->findOrFail($id);
+    //     $motif->restore();
 
-        return $this->index();
-    }
+    //     return redirect()->route('motif.index')->with('success', 'Motif restored successfully');
+    // }
 }

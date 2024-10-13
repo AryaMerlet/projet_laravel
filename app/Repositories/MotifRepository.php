@@ -56,8 +56,8 @@ class MotifRepository
      */
     private function save(Motif $motif, array $inputs)
     {
+        $motif->description = $inputs['description'];
         $motif->save();
-
         return $motif;
     }
 }

@@ -22,6 +22,7 @@ class VerifyEmailController extends Controller
             }
 
             if ($user->markEmailAsVerified()) {
+                \Log::info('Verified event fired for user: ' . $user->id);
                 event(new Verified($user));
             }
 

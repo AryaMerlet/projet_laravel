@@ -6,35 +6,43 @@ use App\Models\Absence;
 use App\Models\Motif;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Bouncer;
 
 class AbsenceController extends Controller
 {
     /**
      * Summary of index
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return mixed|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
      */
     public function index()
     {
-        // $user = auth::user();
-        // if (Bouncer::is($user)->a('admin')){
-        $motifs = Motif::all();
-        // $absences = Absence::all();
-        $users = User::all();
-        $absences = Absence::with('motif');
+        $user = auth()->user();
 
-        return view('absence.index', compact('absences', 'motifs', 'absences'));
-        // } else if(Bouncer::is($user)->a('employee')) {
-        //     $absencesUser = New Absence;
-        //     $absencesUser->getAbsenceWithMotifAndUser($user->id);
-        //     $motifs = Motif::all();
-        //     $absences = Absence::all();
+        // Check if the user is authenticated
+        if (!$user) {
+            return redirect()->route('login')->with('message', 'You need to login first.');
+        }
 
-        //     return view('absence.index', compact('absences','user','motifs','absencesUser'));
-        // } else {
-        //     session::hasMessage("You don't have the rights to access this page");
-        //     return redirect()->route('/');
-        // }
+        if (Bouncer::is($user)->a('admin')) {
+            $motifs = Motif::all();
+            $users = User::all();
+            $absences = Absence::with('motif')->get();
+
+            return view('absence.index', compact('absences', 'motifs', 'users'));
+        }
+        // Check for employee permissions
+        elseif (Bouncer::is($user)->a('employee')) {
+            $absencesUser = Absence::where('user_id', $user->id)->with('motif')->get();
+            $motifs = Motif::all();
+
+            return view('absence.index', compact('absencesUser', 'user', 'motifs'));
+        }
+        // Redirect if the user doesn't have the right permissions
+        else {
+            session()->flash('message', "You don't have the rights to access this page");
+            return redirect()->route('home');
+        }
     }
 
     /**
@@ -54,9 +62,9 @@ class AbsenceController extends Controller
      */
     public function store(Request $request)
     {
-        $absence = new Absence();
-        $absence->leaveStart = $request->input('leavestart');
-        $absence->leaveEnd = $request->input('leaveend');
+        // $absence = new Absence();
+        // $absence->leaveStart = $request->input('leavestart');
+        // $absence->leaveEnd = $request->input('leaveend');
     }
 
     /**

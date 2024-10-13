@@ -1,7 +1,7 @@
 <?php
 
 namespace Database\Factories;
-
+use App\Models\Absence;
 use App\Models\Motif;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class AbsenceFactory extends Factory
 {
+    protected $model = Absence::class;
+
     /**
      * Define the model's default state.
      *
@@ -23,8 +25,8 @@ class AbsenceFactory extends Factory
         return [
             'leaveStart' => $leaveStart,
             'leaveEnd' => fake()->dateTimeBetween($leaveStart, 'now'),
-            'user_id' => User::all()->random()->id,
-            'motif_id' => Motif::all()->random()->id,
+            'user_id' => User::factory(),
+            'motif_id' => Motif::factory(),
         ];
     }
 }

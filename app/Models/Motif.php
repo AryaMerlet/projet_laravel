@@ -41,6 +41,14 @@ class Motif extends Model
     use SoftDeletes;
 
     /**
+     * Summary of fillable
+     * @var array
+     */
+    protected $fillable = [
+        'description', // Add 'description' to the fillable array
+    ];
+
+    /**
      * Summary of absences
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<Absence>
@@ -57,7 +65,7 @@ class Motif extends Model
      */
     public function getMotifWithCache()
     {
-        Cache::remember('motif', 3600, function () {
+        return Cache::remember('motif', 3600, function () {
             return Motif::all();
         });
     }
